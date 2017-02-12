@@ -54,7 +54,7 @@
             this.OldSelectPriceBtn.TabIndex = 0;
             this.OldSelectPriceBtn.Text = "Выберите файл";
             this.OldSelectPriceBtn.UseVisualStyleBackColor = true;
-            this.OldSelectPriceBtn.Click += new System.EventHandler(this.button1_Click);
+            this.OldSelectPriceBtn.Click += new System.EventHandler(this.OldSelectPriceBtn_Click);
             // 
             // OldTitleColumn
             // 
@@ -146,6 +146,7 @@
             this.NewSelectPriceBtn.TabIndex = 7;
             this.NewSelectPriceBtn.Text = "Выберите файл";
             this.NewSelectPriceBtn.UseVisualStyleBackColor = true;
+            this.NewSelectPriceBtn.Click += new System.EventHandler(this.NewSelectPriceBtn_Click);
             // 
             // CompareBtn
             // 
@@ -155,6 +156,7 @@
             this.CompareBtn.TabIndex = 13;
             this.CompareBtn.Text = "Сравнить прайсы";
             this.CompareBtn.UseVisualStyleBackColor = true;
+            this.CompareBtn.Click += new System.EventHandler(this.CompareBtn_Click);
             // 
             // PriceCompareForm
             // 
