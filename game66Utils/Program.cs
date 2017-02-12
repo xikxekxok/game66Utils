@@ -14,6 +14,7 @@ namespace game66Utils
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new PriceCompareForm());
