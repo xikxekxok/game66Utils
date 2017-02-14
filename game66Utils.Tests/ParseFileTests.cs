@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.TestKit.NUnit;
 using game66Utils.Actors;
-using game66Utils.Messages;
+using game66Utils.Actors.Parse;
+using game66Utils.Models;
 using NUnit.Framework;
 
 namespace game66Utils.Tests

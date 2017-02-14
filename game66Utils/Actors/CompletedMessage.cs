@@ -1,4 +1,4 @@
-﻿namespace game66Utils.Messages
+﻿namespace game66Utils.Models
 {
     public class CompletedMessage
     {

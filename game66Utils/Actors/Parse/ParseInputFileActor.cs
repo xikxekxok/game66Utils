@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Akka.Actor;
-using game66Utils.Messages;
+using game66Utils.Models;
 using OfficeOpenXml;
 
-namespace game66Utils.Actors
+namespace game66Utils.Actors.Parse
 {
     public class ParseInputFileActor : OneTypeReceiveActor<UserInputMessage>
     {
@@ -25,7 +23,7 @@ namespace game66Utils.Actors
         {
             using (var package = new ExcelPackage(new FileInfo(message.FileUrl)))
             {
-                var result = new List<PriceRow>();
+                var result = new List<ProductModel>();
 
                 var sheet = package.Workbook.Worksheets.FirstOrDefault();
                 if (sheet == null)
@@ -42,7 +40,7 @@ namespace game66Utils.Actors
                         Price = sheet.Cells[message.PriceColumn + rowNum].Value?.ToString()
                     };
 
-                    var rowModel = await _rowParser.Ask(row) as PriceRow;
+                    var rowModel = await _rowParser.Ask(row) as ProductModel;
 
                     if (rowModel != null)
                         result.Add(rowModel);

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Util;
 using game66Utils.Actors;
-using game66Utils.Messages;
+using game66Utils.Models;
 
 namespace game66Utils.Tests
 {

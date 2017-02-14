@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using game66Utils.Messages;
+using game66Utils.Models;
 
-namespace game66Utils.Actors
+namespace game66Utils.Actors.Parse
 {
-    public class ParseInputRowActor : OneTypeReceiveActor<FileRow, PriceRow>
+    public class ParseInputRowActor : OneTypeReceiveActor<FileRow, ProductModel>
     {
-        protected override async Task<PriceRow> Handle(FileRow message)
+        protected override async Task<ProductModel> Handle(FileRow message)
         {
             if (string.IsNullOrEmpty(message.Id) || string.IsNullOrEmpty(message.Price))
                 return null;
@@ -20,10 +17,13 @@ namespace game66Utils.Actors
             decimal price;
             if (Decimal.TryParse(dString, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out price))
             {
-                return new PriceRow
+                return new ProductModel
                 {
                     Id = message.Id,
-                    Price = price
+                    Price = new PriceModel
+                    {
+                        Price = price
+                    }
                 };
             }
 

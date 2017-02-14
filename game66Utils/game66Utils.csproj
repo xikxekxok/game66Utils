@@ -64,16 +64,22 @@
     <Compile Include="ActorFactory.cs" />
     <Compile Include="Actors\ComparePricesActor.cs" />
     <Compile Include="Actors\CompareResultToFile.cs" />
+    <Compile Include="Actors\CreateCompareTable.cs" />
     <Compile Include="Actors\OneTypeReceiveActor.cs" />
-    <Compile Include="Actors\ParseInputFileActor.cs" />
-    <Compile Include="Actors\ParseInputRowActor.cs" />
+    <Compile Include="Actors\Parse\ParseInputFileActor.cs" />
+    <Compile Include="Actors\Parse\ParseInputRowActor.cs" />
     <Compile Include="Actors\SaveResultFile.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Messages\CompletedMessage.cs" />
-    <Compile Include="Messages\FileRow.cs" />
-    <Compile Include="Messages\FileTypeEnum.cs" />
-    <Compile Include="Messages\PriceRow.cs" />
-    <Compile Include="Messages\UserInputMessage.cs" />
+    <Compile Include="Models\CompareInputMessage.cs" />
+    <Compile Include="Models\CompareResultMessage.cs" />
+    <Compile Include="Actors\CompletedMessage.cs" />
+    <Compile Include="Models\FileRow.cs" />
+    <Compile Include="Models\ProductChangeModel.cs" />
+    <Compile Include="Models\PriceListModel.cs" />
+    <Compile Include="Models\PriceModel.cs" />
+    <Compile Include="Models\PriceTypeEnum.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\UserInputMessage.cs" />
     <Compile Include="PriceCompareForm.cs">
       <SubType>Form</SubType>
     </Compile>
