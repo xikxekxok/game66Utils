@@ -23,7 +23,11 @@ namespace game66Utils.Actors.Parse
         {
             using (var package = new ExcelPackage(new FileInfo(message.FileUrl)))
             {
-                var result = new List<ProductModel>();
+                var result = new PriceListModel
+                {
+                    Items = new List<PriceListItemModel>(),
+                    PriceType = message.CurrentPriceType
+                };
 
                 var sheet = package.Workbook.Worksheets.FirstOrDefault();
                 if (sheet == null)
@@ -40,10 +44,10 @@ namespace game66Utils.Actors.Parse
                         Price = sheet.Cells[message.PriceColumn + rowNum].Value?.ToString()
                     };
 
-                    var rowModel = await _rowParser.Ask(row) as ProductModel;
+                    var rowModel = await _rowParser.Ask(row) as PriceListItemModel;
 
                     if (rowModel != null)
-                        result.Add(rowModel);
+                        result.Items.Add(rowModel);
                 }
 
                 _comparator.Tell(result);

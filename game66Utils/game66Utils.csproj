@@ -32,23 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Akka, Version=1.1.3.31, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Akka.1.1.3\lib\net45\Akka.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,17 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorFactory.cs" />
-    <Compile Include="Actors\ComparePricesActor.cs" />
-    <Compile Include="Actors\CompareResultToFile.cs" />
-    <Compile Include="Actors\CreateCompareTable.cs" />
-    <Compile Include="Actors\OneTypeReceiveActor.cs" />
-    <Compile Include="Actors\Parse\ParseInputFileActor.cs" />
-    <Compile Include="Actors\Parse\ParseInputRowActor.cs" />
-    <Compile Include="Actors\SaveResultFile.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\CompareInputMessage.cs" />
     <Compile Include="Models\CompareResultMessage.cs" />
-    <Compile Include="Actors\CompletedMessage.cs" />
     <Compile Include="Models\FileRow.cs" />
     <Compile Include="Models\ProductChangeModel.cs" />
     <Compile Include="Models\PriceListModel.cs" />
@@ -88,6 +76,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ComparePriceTableService.cs" />
+    <Compile Include="Services\CompareService.cs" />
+    <Compile Include="Services\ParseInputRowService.cs" />
+    <Compile Include="Services\Parsers\XlsParser.cs" />
+    <Compile Include="Services\Parsers\XlsxParser.cs" />
+    <Compile Include="Services\CreateResultFileService.cs" />
+    <Compile Include="Services\ParserFactory.cs" />
     <EmbeddedResource Include="PriceCompareForm.resx">
       <DependentUpon>PriceCompareForm.cs</DependentUpon>
     </EmbeddedResource>

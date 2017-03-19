@@ -11,6 +11,9 @@ namespace game66Utils.Actors
     public class ComparePricesActor : OneTypeReceiveActor<PriceListModel>
     {
         private IActorRef _compareResultSaver;
+        private List<PriceListItemModel> _oldPrices;
+        private List<PriceListItemModel> _newPrices;
+
         public ComparePricesActor(
             IActorRef compareResultSaver
             )
@@ -27,16 +30,16 @@ namespace game66Utils.Actors
             switch (message.PriceType)
             {
                 case PriceTypeEnum.Old:
-                    _oldPrices = message.Price;
+                    _oldPrices = message.Items;
                     break;
                 case PriceTypeEnum.New:
-                    _newPrices = message.Price;
+                    _newPrices = message.Items;
                     break;
             }
 
             if (_oldPrices != null && _newPrices != null)
             {
-                var joinTable = _oldPrices.FullOuterJoin(_newPrices, x => x.Id, x => x.Id,
+                var joinTable = _oldPrices.FullOuterJoin(_newPrices, x => x.Product.Id, x => x.Product.Id,
                     (row, priceRow, id) => new {oldPrice = row, newPrice = priceRow},
                     null,null,StringComparer.InvariantCultureIgnoreCase);
 

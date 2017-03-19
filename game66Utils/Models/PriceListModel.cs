@@ -4,7 +4,12 @@ namespace game66Utils.Models
 {
     public class PriceListModel
     {
-        public List<ProductModel> Products { get; set; }
-        public PriceTypeEnum PriceType { get; set; }
+        public List<PriceListItemModel> Items { get; set; }
+    }
+
+    public class PriceListItemModel
+    {
+        public ProductModel Product { get; set; }
+        public PriceModel Price { get; set; }
     }
 }

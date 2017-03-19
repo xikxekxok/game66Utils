@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading.Tasks;
 using game66Utils.Models;
 
-namespace game66Utils.Actors.Parse
+namespace game66Utils.Services
 {
-    public class ParseInputRowActor : OneTypeReceiveActor<FileRow, PriceListItemModel>
+    public interface IParseInputRowService
     {
-        protected override async Task<PriceListItemModel> Handle(FileRow message)
+        PriceListItemModel ParsePriceFromRow(FileRow row);
+
+    }
+
+    public class ParseInputRowService : IParseInputRowService
+    {
+        public PriceListItemModel ParsePriceFromRow(FileRow row)
         {
-            if (string.IsNullOrEmpty(message.Id) || string.IsNullOrEmpty(message.Price))
+            if (string.IsNullOrEmpty(row.Id) || string.IsNullOrEmpty(row.Price))
                 return null;
 
-            var dString = message.Price.Replace(",", ".");
+            var dString = row.Price.Replace(",", ".");
 
             decimal price;
             if (Decimal.TryParse(dString, NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out price))
@@ -21,7 +26,7 @@ namespace game66Utils.Actors.Parse
                 {
                     Product = new ProductModel
                     {
-                        Id = message.Id
+                        Id = row.Id
                     },
                     Price = new PriceModel
                     {
