@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using game66Utils.Factory;
+using Ninject;
 
 namespace game66Utils
 {
@@ -17,7 +19,9 @@ namespace game66Utils
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PriceCompareForm());
+            DiContainer.Register();
+            var form = DiContainer.Kernel.Get<PriceCompareForm>();
+            Application.Run(form);
         }
     }
 }

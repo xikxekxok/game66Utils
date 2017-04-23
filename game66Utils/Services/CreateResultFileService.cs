@@ -27,6 +27,7 @@ namespace game66Utils.Services
                 {
                     newProdsSheet.Cells[i+1, 1].Value = newProducts[i].Id;
                 }
+                newProdsSheet.Column(1).AutoFit();
 
                 var delProdsSheet = package.Workbook.Worksheets.Add("Удаленные товары");
                 var delProducts = compareResult.GetDeletedProducts();
@@ -34,6 +35,7 @@ namespace game66Utils.Services
                 {
                     delProdsSheet.Cells[i+1, 1].Value = delProducts[i].Id;
                 }
+                delProdsSheet.Column(1).AutoFit();
 
 
                 var changeSheets = package.Workbook.Worksheets.Add("Изменилась цена");
@@ -48,6 +50,10 @@ namespace game66Utils.Services
                     changeSheets.Cells[i+2, 2].Value = changed[i].OldPrice.Price;
                     changeSheets.Cells[i+2, 3].Value = changed[i].NewPrice.Price;
                 }
+
+                changeSheets.Column(1).AutoFit();
+                changeSheets.Column(2).AutoFit();
+                changeSheets.Column(3).AutoFit();
 
                 return package.GetAsByteArray();
             }

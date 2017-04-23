@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace game66Utils
+namespace game66Utils.Infrastructure
 {
-    public class ActorFactory
+    public interface IRepository
     {
-
     }
 }

@@ -7,36 +7,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using game66Utils.Catalog.Command;
+using game66Utils.Catalog.Query;
+using game66Utils.Catalog.Query.CategoryList;
+using game66Utils.Database;
 using game66Utils.Models;
 using game66Utils.Services;
+using Ninject;
 
 namespace game66Utils
 {
     public partial class PriceCompareForm : Form
     {
-        private CompareService _compareService;
-        public PriceCompareForm()
+
+        public PriceCompareForm(ICategoryListQuery categoryListQuery, IKernel kernel)
         {
+            _kernel = kernel;
+            _categoryListQuery = categoryListQuery;
             InitializeComponent();
             _compareService = new CompareService(
-                new ParserFactory(new ParseInputRowService()), 
-                new ComparePriceTableService(), 
+                new ParserFactory(new ParseInputRowService()),
+                new ComparePriceTableService(),
                 new CreateResultFileService()
-                );
+            );
+        }
+        private async void PriceCompareForm_Load(object sender, EventArgs e)
+        {
+            await ReloadCategoryList();
         }
 
+        #region comparePrice
+        private CompareService _compareService;
         private string _oldPriceUrl;
         private string _newPriceUrl;
+        private ICategoryListQuery _categoryListQuery;
+        private IKernel _kernel;
+
         private void OldSelectPriceBtn_Click(object sender, EventArgs e)
         {
             if (OldPriceOpenDialog.ShowDialog() == DialogResult.OK)
+            {
                 _oldPriceUrl = OldPriceOpenDialog.FileName;
+                old_FileName.Text = OldPriceOpenDialog.FileName;
+            }
         }
 
         private void NewSelectPriceBtn_Click(object sender, EventArgs e)
         {
             if (NewPriceOpenDialog.ShowDialog() == DialogResult.OK)
+            {
                 _newPriceUrl = NewPriceOpenDialog.FileName;
+                new_FileName.Text = NewPriceOpenDialog.FileName;
+            }
         }
 
         private void CompareBtn_Click(object sender, EventArgs e)
@@ -75,6 +97,9 @@ namespace game66Utils
                 TitleColumn = ot,
             };
             var compareResultFile = _compareService.ComparePrices(old, newFile);
+            CompareResultSaveDialog.Filter = "Excel 2007 files (*.xlsx)|*.xlsx";
+            CompareResultSaveDialog.DefaultExt = "xlsx";
+            CompareResultSaveDialog.AddExtension = true;
             if (CompareResultSaveDialog.ShowDialog() == DialogResult.OK)
             {
                 using (var myStream = CompareResultSaveDialog.OpenFile())
@@ -84,5 +109,40 @@ namespace game66Utils
                 }
             }
         }
+
+
+        #endregion
+
+        #region category
+
+        private async Task ReloadCategoryList()
+        {
+            CategoryList.DataSource = await _categoryListQuery.Execute();
+        }
+        private async void RenameCategoryBtn_Click(object sender, EventArgs e)
+        {
+            var category = CategoryList.SelectedItem as CategoryListDto;
+            if (category == null)
+            {
+                MessageBox.Show("Выберите категорию!");
+                return;
+            }
+            var dialog = new ChangeCategory(_kernel.Get<IUpdateCategoryCommand>(), category);
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                await ReloadCategoryList();
+            }
+        }
+        private async void AddCategoryBtn_Click(object sender, EventArgs e)
+        {
+            var dialog = new ChangeCategory(_kernel.Get<IAddCategoryCommand>());
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                await ReloadCategoryList();
+            }
+        }
+        #endregion
+
     }
 }
