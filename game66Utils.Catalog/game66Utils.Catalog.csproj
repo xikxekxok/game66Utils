@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="CatalogInjectModule.cs" />
     <Compile Include="Command\IAddCategoryCommand.cs" />
+    <Compile Include="Command\IAddProductCommand.cs" />
     <Compile Include="Command\Impl\AddCategoryCommand.cs" />
+    <Compile Include="Command\Impl\AddProductCommand.cs" />
     <Compile Include="Command\IUpdateCategoryCommand.cs" />
     <Compile Include="DataLayer\ICategoryRepository.cs" />
     <Compile Include="DataLayer\IUnitOfWorkFactory.cs" />
@@ -73,6 +75,10 @@
     <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">
       <Project>{5634FD93-864E-414C-A2CE-F61F4D8FC51E}</Project>
       <Name>game66Utils.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\game66Utils.Infrastructure\game66Utils.Infrastructure.csproj">
+      <Project>{23dde513-25cb-44da-adb9-ce0454d7a8c0}</Project>
+      <Name>game66Utils.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

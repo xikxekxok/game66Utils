@@ -51,9 +51,9 @@ namespace game66Utils.Catalog.Command.Impl
         {
             using(var uof = _unitOfWorkFactory.Create())
             {
-                Category category = uof.CategoryRepository.Query().ById(id).FirstOrDefault();
-                if (category == null)
-                    throw new Exception($"category {id} not found!");
+                Category category = await uof.CategoryRepository.Query()
+                    .ById(id)
+                    .First();
 
                 category.Update(categoryName);
 

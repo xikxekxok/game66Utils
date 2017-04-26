@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,28 +25,32 @@ namespace game66Utils.Catalog.DataLayer
     internal interface IUnitOfWork : IDisposable
     {
         ICategoryRepository CategoryRepository { get; }
+        IProductRepository ProductRepository { get; }
         Task Commit();
     }
 
-    class UnitOfWork : IUnitOfWork
+    class UnitOfWork : BaseUnitOfWork<MyDbContext>, IUnitOfWork
     {
-        private MyDbContext _context;
+        public ICategoryRepository CategoryRepository => new CategoryRepository(Context);
+        public IProductRepository ProductRepository { get; }
 
-        public UnitOfWork()
-        {
-            _context = new MyDbContext();
-        }
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
-
-        public ICategoryRepository CategoryRepository => new CategoryRepository(_context);
         public async Task Commit()
         {
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
     }
 
-    
+    public class BaseUnitOfWork<TContext> where TContext : DbContext, new()
+    {
+        protected TContext Context { get; }
+
+        public BaseUnitOfWork()
+        {
+            Context = new TContext();
+        }
+        public void Dispose()
+        {
+            Context.Dispose();
+        }
+    }
 }
