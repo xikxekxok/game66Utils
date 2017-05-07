@@ -10,9 +10,12 @@ using System.Windows.Forms;
 using game66Utils.Catalog.Command;
 using game66Utils.Catalog.Query;
 using game66Utils.Catalog.Query.CategoryList;
+using game66Utils.Catalog.Query.ProductExists;
 using game66Utils.Database;
 using game66Utils.Models;
 using game66Utils.Services;
+using game66Utils.Stock;
+using game66Utils.Stock.Command;
 using Ninject;
 
 namespace game66Utils
@@ -117,7 +120,9 @@ namespace game66Utils
 
         private async Task ReloadCategoryList()
         {
-            CategoryList.DataSource = await _categoryListQuery.Execute();
+            var categoryList = await _categoryListQuery.Execute();
+            CategoryList.DataSource = categoryList;
+            stock_categories.DataSource = categoryList;
         }
         private async void RenameCategoryBtn_Click(object sender, EventArgs e)
         {
@@ -144,5 +149,33 @@ namespace game66Utils
         }
         #endregion
 
+        #region stock
+        private void addToStockBtn_Click(object sender, EventArgs e)
+        {
+            var category = stock_categories.SelectedItem as CategoryListDto;
+            if (category == null)
+            {
+                MessageBox.Show("Выберите категорию!");
+                return;
+            }
+
+            var dialog = new AddToStock(_kernel.Get<IProductExistsQuery>(), _kernel.Get<IAddToStockCommand>(), _kernel.Get<IAddProductCommand>(), category.Id);
+            dialog.ShowDialog();
+        }
+        #endregion
+
+        private void removeFromStock_Click(object sender, EventArgs e)
+        {
+            var category = stock_categories.SelectedItem as CategoryListDto;
+            if (category == null)
+            {
+                MessageBox.Show("Выберите категорию!");
+                return;
+            }
+
+            var dialog = new RemoveFromStock(_kernel.Get<IRemoveFromStock>(), category.Id);
+            dialog.ShowDialog();
+
+        }
     }
 }

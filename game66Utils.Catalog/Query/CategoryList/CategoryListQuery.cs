@@ -14,12 +14,12 @@ namespace game66Utils.Catalog.Query
         {
             using (var context = new MyDbContext())
             {
-                var list = await context.u0120612_zeronicus_Categories
+                var list = await context.Categories
                     .Select(x => new
                     {
                         Id = x.Id,
                         Name = x.Name,
-                        ProductCount = x.u0120612_zeronicus_Products.Count
+                        ProductCount = x.Products.Count
                     })
                     .ToListAsync();
                 return list

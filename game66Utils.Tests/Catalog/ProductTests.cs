@@ -27,7 +27,7 @@ namespace game66Utils.Tests.Catalog
         public void CreateProductTest()
         {
             var product = CreateProduct();
-            Assert.AreEqual(_defaultId, product.Id);
+            Assert.AreEqual(_defaultId, product.BarCode);
             Assert.AreEqual(_defaultCategoryId, product.CategoryId);
             Assert.AreEqual(_defaultDescription, product.Description);
             Assert.AreEqual(_defaultPrice, product.Price);

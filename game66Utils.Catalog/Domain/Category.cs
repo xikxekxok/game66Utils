@@ -1,21 +1,22 @@
 ﻿using System;
 using game66Utils.Database;
+using game66Utils.Infrastructure;
 
 namespace game66Utils.Catalog.Domain
 {
-    public class Category
+    public class Category : IAggregate<CategoryState>
     {
-        internal u0120612_zeronicus_CategoryState State { get; set; }
+        public CategoryState State { get; set; }
 
         public Category(Guid id, string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
-            State = new u0120612_zeronicus_CategoryState();
+            State = new CategoryState();
             State.Id = id.ToString();
             State.Name = name;
         }
 
-        internal Category(u0120612_zeronicus_CategoryState state)
+        internal Category(CategoryState state)
         {
             State = state;
         }

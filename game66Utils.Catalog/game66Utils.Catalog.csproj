@@ -59,17 +59,26 @@
     <Compile Include="Command\Impl\AddCategoryCommand.cs" />
     <Compile Include="Command\Impl\AddProductCommand.cs" />
     <Compile Include="Command\IUpdateCategoryCommand.cs" />
-    <Compile Include="DataLayer\ICategoryRepository.cs" />
+    <Compile Include="DataLayer\Category\CategoryRepository.cs" />
+    <Compile Include="DataLayer\Category\ICategoryDomainQuery.cs" />
+    <Compile Include="DataLayer\Category\ICategoryRepository.cs" />
+    <Compile Include="DataLayer\Product\IProductRepository.cs" />
+    <Compile Include="DataLayer\IUnitOfWork.cs" />
     <Compile Include="DataLayer\IUnitOfWorkFactory.cs" />
+    <Compile Include="DataLayer\UnitOfWork.cs" />
+    <Compile Include="DataLayer\UnitOfWorkFactory.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Products\Product.cs" />
     <Compile Include="Domain\Products\ProductDescription.cs" />
+    <Compile Include="Domain\Products\ProductId.cs" />
     <Compile Include="Domain\Products\ProductPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\CategoryList\CategoryListDto.cs" />
     <Compile Include="Query\CategoryList\CategoryListQuery.cs" />
     <Compile Include="Query\CategoryList\FakeCategoryListQuery.cs" />
     <Compile Include="Query\CategoryList\ICategoryListQuery.cs" />
+    <Compile Include="Query\ProductExists\IProductExistsQuery.cs" />
+    <Compile Include="Query\ProductExists\ProductExistsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">

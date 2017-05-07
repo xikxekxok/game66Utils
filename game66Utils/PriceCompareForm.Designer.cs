@@ -53,8 +53,10 @@
             this.RenameCategoryBtn = new System.Windows.Forms.Button();
             this.CategoryList = new System.Windows.Forms.ListBox();
             this.stockPage = new System.Windows.Forms.TabPage();
-            this.addToStockBtn = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.stock_categories = new System.Windows.Forms.ComboBox();
             this.removeFromStock = new System.Windows.Forms.Button();
+            this.addToStockBtn = new System.Windows.Forms.Button();
             this.pageManager.SuspendLayout();
             this.ComparePricePage.SuspendLayout();
             this.CategoriesPage.SuspendLayout();
@@ -268,6 +270,8 @@
             // 
             // stockPage
             // 
+            this.stockPage.Controls.Add(this.label7);
+            this.stockPage.Controls.Add(this.stock_categories);
             this.stockPage.Controls.Add(this.removeFromStock);
             this.stockPage.Controls.Add(this.addToStockBtn);
             this.stockPage.Location = new System.Drawing.Point(4, 22);
@@ -277,23 +281,42 @@
             this.stockPage.Text = "Склад";
             this.stockPage.UseVisualStyleBackColor = true;
             // 
-            // addToStockBtn
+            // label7
             // 
-            this.addToStockBtn.Location = new System.Drawing.Point(26, 34);
-            this.addToStockBtn.Name = "addToStockBtn";
-            this.addToStockBtn.Size = new System.Drawing.Size(316, 126);
-            this.addToStockBtn.TabIndex = 0;
-            this.addToStockBtn.Text = "Пополнить склад";
-            this.addToStockBtn.UseVisualStyleBackColor = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(19, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Выберите категорию:";
+            // 
+            // stock_categories
+            // 
+            this.stock_categories.FormattingEnabled = true;
+            this.stock_categories.Location = new System.Drawing.Point(19, 54);
+            this.stock_categories.Name = "stock_categories";
+            this.stock_categories.Size = new System.Drawing.Size(316, 21);
+            this.stock_categories.TabIndex = 2;
             // 
             // removeFromStock
             // 
-            this.removeFromStock.Location = new System.Drawing.Point(560, 34);
+            this.removeFromStock.Location = new System.Drawing.Point(553, 105);
             this.removeFromStock.Name = "removeFromStock";
             this.removeFromStock.Size = new System.Drawing.Size(329, 126);
             this.removeFromStock.TabIndex = 1;
             this.removeFromStock.Text = "Списать со склада";
             this.removeFromStock.UseVisualStyleBackColor = true;
+            this.removeFromStock.Click += new System.EventHandler(this.removeFromStock_Click);
+            // 
+            // addToStockBtn
+            // 
+            this.addToStockBtn.Location = new System.Drawing.Point(19, 105);
+            this.addToStockBtn.Name = "addToStockBtn";
+            this.addToStockBtn.Size = new System.Drawing.Size(316, 126);
+            this.addToStockBtn.TabIndex = 0;
+            this.addToStockBtn.Text = "Пополнить склад";
+            this.addToStockBtn.UseVisualStyleBackColor = true;
+            this.addToStockBtn.Click += new System.EventHandler(this.addToStockBtn_Click);
             // 
             // PriceCompareForm
             // 
@@ -302,13 +325,14 @@
             this.ClientSize = new System.Drawing.Size(953, 432);
             this.Controls.Add(this.pageManager);
             this.Name = "PriceCompareForm";
-            this.Text = "Сравнение прайсов, версия 1.1.0";
+            this.Text = "Сравнение прайсов, версия 2.0.0-beta";
             this.Load += new System.EventHandler(this.PriceCompareForm_Load);
             this.pageManager.ResumeLayout(false);
             this.ComparePricePage.ResumeLayout(false);
             this.ComparePricePage.PerformLayout();
             this.CategoriesPage.ResumeLayout(false);
             this.stockPage.ResumeLayout(false);
+            this.stockPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -342,6 +366,8 @@
         private System.Windows.Forms.TabPage stockPage;
         private System.Windows.Forms.Button removeFromStock;
         private System.Windows.Forms.Button addToStockBtn;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox stock_categories;
     }
 }
 

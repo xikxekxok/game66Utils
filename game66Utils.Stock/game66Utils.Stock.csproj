@@ -53,11 +53,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\IAddToStockCommand.cs" />
+    <Compile Include="Command\Impl\AddToStockCommand.cs" />
+    <Compile Include="Command\IRemoveFromStock.cs" />
+    <Compile Include="Domain\ProductStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\game66Utils.Catalog\game66Utils.Catalog.csproj">
+      <Project>{5CB52234-C5F4-4426-8FA3-EC6AB4EE90EA}</Project>
+      <Name>game66Utils.Catalog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">
+      <Project>{5634FD93-864E-414C-A2CE-F61F4D8FC51E}</Project>
+      <Name>game66Utils.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

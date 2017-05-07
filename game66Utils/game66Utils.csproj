@@ -110,11 +110,23 @@
     <Compile Include="Services\Parsers\XlsxParser.cs" />
     <Compile Include="Services\CreateResultFileService.cs" />
     <Compile Include="Services\ParserFactory.cs" />
-    <Compile Include="Stock\AddToStock_BarCode.cs">
+    <Compile Include="Stock\AddProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Stock\AddToStock_BarCode.Designer.cs">
-      <DependentUpon>AddToStock_BarCode.cs</DependentUpon>
+    <Compile Include="Stock\AddProduct.Designer.cs">
+      <DependentUpon>AddProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\AddToStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stock\AddToStock.Designer.cs">
+      <DependentUpon>AddToStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stock\RemoveFromStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stock\RemoveFromStock.Designer.cs">
+      <DependentUpon>RemoveFromStock.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="ChangeCategory.resx">
       <DependentUpon>ChangeCategory.cs</DependentUpon>
@@ -131,6 +143,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Stock\AddProduct.resx">
+      <DependentUpon>AddProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stock\AddToStock.resx">
+      <DependentUpon>AddToStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stock\RemoveFromStock.resx">
+      <DependentUpon>RemoveFromStock.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <SubType>Designer</SubType>

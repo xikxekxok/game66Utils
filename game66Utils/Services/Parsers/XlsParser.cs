@@ -50,7 +50,10 @@ namespace game66Utils.Services.Parsers
                     var rowModel = _parseInputRowService.ParsePriceFromRow(row);
 
                     if (rowModel != null)
+                    {
                         result.Items.Add(rowModel);
+                        rowModel.RowNum = rowNum;
+                    }
                 }
 
 

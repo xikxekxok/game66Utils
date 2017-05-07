@@ -8,7 +8,7 @@ namespace game66Utils.Catalog.Command
 {
     public interface IAddProductCommand
     {
-        void Execute(AddProductContext context);
+        Task Execute(AddProductContext context);
     }
 
     public class AddProductContext

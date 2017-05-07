@@ -11,5 +11,6 @@ namespace game66Utils.Models
     {
         public ProductModel Product { get; set; }
         public PriceModel Price { get; set; }
+        public int RowNum { get; set; }
     }
 }

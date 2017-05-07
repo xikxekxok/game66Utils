@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using game66Utils.Catalog.DataLayer;
 using game66Utils.Catalog.Domain.Products;
+using game66Utils.Database;
 
 namespace game66Utils.Catalog.Command.Impl
 {
@@ -19,13 +20,16 @@ namespace game66Utils.Catalog.Command.Impl
         }
 
 
-        public void Execute(AddProductContext context)
+        public async Task Execute(AddProductContext context)
         {
-            using (var uof = _unitOfWorkFactory.Create())
+            using (var dbContext = new MyDbContext())
             {
                 var product = new Product(context.BarCode, context.CategoryId, new ProductDescription(context.Title), new ProductPrice(context.PurchasePrice, context.SellingPrice));
 
-                uof.CategoryRepository
+                dbContext.Products.Add(product.State);
+
+                await dbContext.SaveChangesAsync();
+                //uof.CategoryRepository
             }
         }
     }

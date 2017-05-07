@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using game66Utils.Catalog;
+using game66Utils.Stock.Command;
+using game66Utils.Stock.Command.Impl;
 using Ninject;
 
 namespace game66Utils.Factory
@@ -19,6 +21,9 @@ namespace game66Utils.Factory
                 InjectNonPublic = true
             });
             Kernel.Load(new CatalogInjectModule());
+
+            Kernel.Bind<IAddToStockCommand>().To<AddToStockCommand>();
+            Kernel.Bind<IRemoveFromStock>().To<RemoveFromStock>();
         }
     }
 }
