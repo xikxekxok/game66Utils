@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using game66Utils.Catalog.DataLayer;
 using game66Utils.Catalog.Domain;
+using game66Utils.Database;
 
 namespace game66Utils.Catalog.Command.Impl
 {
-    internal class AddCategoryCommand : IAddCategoryCommand
+    class AddCategoryCommand : IAddCategoryCommand
     {
         private IUnitOfWorkFactory _unitOfWorkFactory;
 
-        internal AddCategoryCommand(
-            IUnitOfWorkFactory unitOfWorkFactory
-            )
+        AddCategoryCommand(IUnitOfWorkFactory unitOfWorkFactory)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
         }
@@ -23,41 +22,13 @@ namespace game66Utils.Catalog.Command.Impl
         {
             using (var uof = _unitOfWorkFactory.Create())
             {
-                var repository = uof.CategoryRepository;
-
                 var id = Guid.NewGuid();
                 var category = new Category(id, categoryName);
-                repository.Add(category);
+                uof.Add(category);
 
                 await uof.Commit();
 
                 return id;
-            }
-        }
-    }
-
-    internal class UpdateCategoryCommand : IUpdateCategoryCommand
-    {
-        private IUnitOfWorkFactory _unitOfWorkFactory;
-
-        internal UpdateCategoryCommand(
-            IUnitOfWorkFactory unitOfWorkFactory
-        )
-        {
-            _unitOfWorkFactory = unitOfWorkFactory;
-        }
-
-        public async Task Execute(Guid id, string categoryName)
-        {
-            using(var uof = _unitOfWorkFactory.Create())
-            {
-                Category category = await uof.CategoryRepository.Query()
-                    .ById(id)
-                    .First();
-
-                category.Update(categoryName);
-
-                await uof.Commit();
             }
         }
     }

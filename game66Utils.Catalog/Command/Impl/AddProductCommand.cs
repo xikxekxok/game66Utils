@@ -22,13 +22,13 @@ namespace game66Utils.Catalog.Command.Impl
 
         public async Task Execute(AddProductContext context)
         {
-            using (var dbContext = new MyDbContext())
+            using (var uof = _unitOfWorkFactory.Create())
             {
                 var product = new Product(context.BarCode, context.CategoryId, new ProductDescription(context.Title), new ProductPrice(context.PurchasePrice, context.SellingPrice));
 
-                dbContext.Products.Add(product.State);
+                uof.Add(product);
 
-                await dbContext.SaveChangesAsync();
+                await uof.Commit();
                 //uof.CategoryRepository
             }
         }

@@ -10,8 +10,7 @@ namespace game66Utils.Catalog.Query.ProductExists
         {
             using (var context = new MyDbContext())
             {
-                var stringCatId = categoryId.ToString();
-                return context.Products.Any(x => x.Barcode == barCode && x.CategoryId == stringCatId);
+                return context.Products.Any(x => x.Barcode == barCode && x.CategoryId == categoryId);
             }
         }
     }

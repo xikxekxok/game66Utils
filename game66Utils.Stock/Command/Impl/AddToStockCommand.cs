@@ -6,59 +6,61 @@ using System.Text;
 using System.Threading.Tasks;
 using game66Utils.Catalog.Domain.Products;
 using game66Utils.Database;
+using game66Utils.Stock.Dal;
 using game66Utils.Stock.Domain;
 
 namespace game66Utils.Stock.Command.Impl
 {
     public class AddToStockCommand : IAddToStockCommand
     {
-        public AddToStockCommand()
+        private IUnitOfWorkFactory _unitOfWorkFactory;
+
+        public AddToStockCommand(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            
+            _unitOfWorkFactory = unitOfWorkFactory;
         }
-        public async Task Execute(ProductId productId)
+        
+
+        public async Task Execute(Guid categoryId, string productUnitBarCode)
         {
-            using (var context = new MyDbContext())
+            using (var uof = _unitOfWorkFactory.Create())
             {
-                var state =
-                    context.ProductStocks.FirstOrDefault(
-                        x => x.BarCode == productId.BarCode && x.CategoryId == productId.CategoryId);
+                CategoryStock stock = await uof.Query<IStockDomainQuery>().ById(categoryId).First();
 
-                ProductStock stock;
-                if (state == null)
+                if (stock == null)
                 {
-                    stock = new ProductStock(productId);
-                    context.ProductStocks.Add(stock.State);
-                }
-                else
-                {
-                    stock = new ProductStock(state);
+                    stock = new CategoryStock(categoryId);
+                    uof.Add(stock);
                 }
 
-                stock.AddToStock();
+                stock.AddUnit(productUnitBarCode);
 
-                await context.SaveChangesAsync();
+                await uof.Commit();
             }
         }
     }
 
-    public class RemoveFromStock : IRemoveFromStock
+    public class RemoveFromStockCommand : IRemoveFromStockCommand
     {
-        public async Task Execute(ProductId productId)
+        private IUnitOfWorkFactory _unitOfWorkFactory;
+
+        public RemoveFromStockCommand(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            using (var context = new MyDbContext())
+            _unitOfWorkFactory = unitOfWorkFactory;
+        }
+
+        public async Task Execute(Guid stockId, string productId)
+        {
+            using (var uof = _unitOfWorkFactory.Create())
             {
-                var state =
-                    context.ProductStocks.FirstOrDefault(
-                        x => x.BarCode == productId.BarCode && x.CategoryId == productId.CategoryId);
+                var stock = await uof.Query<IStockDomainQuery>().ById(stockId).First();
 
-                if (state == null)
-                    throw new Exception("Product not found!");
-                ProductStock stock = new ProductStock(state);
+                if (stock == null)
+                    throw new Exception("На складе нет единиц товара с таким идентификатором");
 
-                stock.RemoveFromStock();
+                stock.RemoveUnit(productId);
 
-                await context.SaveChangesAsync();
+                await uof.Commit();
             }
         }
     }

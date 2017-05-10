@@ -1,20 +1,23 @@
 ﻿using System;
 using game66Utils.Database;
+using game66Utils.Infrastructure.DataLayer;
 
 namespace game66Utils.Catalog.Domain.Products
 {
-    public class Product
+    class Product : IAggregate<ProductState>
     {
-        internal ProductState State;
+        public ProductState State { get; private set; }
 
         public Product(string barCode, Guid categoryId, ProductDescription description, ProductPrice price)
         {
-            State = new ProductState();
-            State.Barcode = barCode;
-            State.CategoryId = categoryId.ToString();
-            State.Title = description.Title;
-            State.PurchasePrice = price.Purchase;
-            State.SellingPrice = price.Sale;
+            State = new ProductState
+            {
+                Barcode = barCode,
+                CategoryId = categoryId,
+                Title = description.Title,
+                PurchasePrice = price.Purchase,
+                SellingPrice = price.Sale
+            };
         }
 
         public Product(ProductState state)
@@ -24,7 +27,7 @@ namespace game66Utils.Catalog.Domain.Products
 
         public ProductId Id => new ProductId(State.Barcode, CategoryId);
         public string BarCode => State.Barcode;
-        public Guid CategoryId => Guid.Parse(State.CategoryId);
+        public Guid CategoryId => State.CategoryId;
         public ProductDescription Description => new ProductDescription(State.Title);
         public ProductPrice Price => new ProductPrice(State.PurchasePrice, State.SellingPrice);
 

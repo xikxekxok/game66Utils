@@ -55,9 +55,14 @@
   <ItemGroup>
     <Compile Include="Command\IAddToStockCommand.cs" />
     <Compile Include="Command\Impl\AddToStockCommand.cs" />
-    <Compile Include="Command\IRemoveFromStock.cs" />
-    <Compile Include="Domain\ProductStock.cs" />
+    <Compile Include="Command\IRemoveFromStockCommand.cs" />
+    <Compile Include="Dal\IStockDomainQuery.cs" />
+    <Compile Include="Dal\IUnitOfWorkFactory.cs" />
+    <Compile Include="Dal\Impl\StockDomainQuery.cs" />
+    <Compile Include="Dal\Impl\UnitOfWorkFactory.cs" />
+    <Compile Include="Domain\CategoryStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockInjectModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -71,6 +76,10 @@
     <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">
       <Project>{5634FD93-864E-414C-A2CE-F61F4D8FC51E}</Project>
       <Name>game66Utils.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\game66Utils.Infrastructure\game66Utils.Infrastructure.csproj">
+      <Project>{23DDE513-25CB-44DA-ADB9-CE0454D7A8C0}</Project>
+      <Name>game66Utils.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

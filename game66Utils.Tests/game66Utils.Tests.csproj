@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\CategoryTests.cs" />
+    <Compile Include="Catalog\ProductGroupTest.cs" />
     <Compile Include="Catalog\ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stock\ProductStockTests.cs" />
@@ -78,6 +79,10 @@
     <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">
       <Project>{5634fd93-864e-414c-a2ce-f61f4d8fc51e}</Project>
       <Name>game66Utils.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\game66Utils.Infrastructure\game66Utils.Infrastructure.csproj">
+      <Project>{23dde513-25cb-44da-adb9-ce0454d7a8c0}</Project>
+      <Name>game66Utils.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\game66Utils.Stock\game66Utils.Stock.csproj">
       <Project>{EA550033-DA65-42D8-A318-83D5525EAA36}</Project>

@@ -173,7 +173,7 @@ namespace game66Utils
                 return;
             }
 
-            var dialog = new RemoveFromStock(_kernel.Get<IRemoveFromStock>(), category.Id);
+            var dialog = new RemoveFromStock(_kernel.Get<IRemoveFromStockCommand>(), category.Id);
             dialog.ShowDialog();
 
         }

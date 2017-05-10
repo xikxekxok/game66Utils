@@ -59,7 +59,7 @@ namespace game66Utils.Stock
             }
             if (_productExistsQuery.Exist(barCode, _categoryId))
             {
-                await _addToStockCommand.Execute(new ProductId(barCode, _categoryId));
+                await _addToStockCommand.Execute(_categoryId, barCode);
                 MessageBox.Show("Склад успешно пополнен!");
             }
             else

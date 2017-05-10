@@ -10,6 +10,60 @@ using NUnit.Framework;
 namespace game66Utils.Tests.Stock
 {
     [TestFixture(Category = "unit")]
+    public class StockTests
+    {
+        private Guid _defaultId = Guid.NewGuid();
+        private string _defaultBarCode1 = "123456";
+        private string _defaultBarCode2 = "654321";
+
+        [Test]
+        public void CreateStockTest()
+        {
+            var stock = new game66Utils.Stock.Domain.CategoryStock(_defaultId);
+            Assert.AreEqual(_defaultId, stock.CategoryId);
+
+            Assert.AreEqual(0, stock.UnitCount(_defaultBarCode1));
+        }
+
+        [Test]
+        public void AddToStock_OneUnitInStock()
+        {
+            var stock = new game66Utils.Stock.Domain.CategoryStock(_defaultId);
+            stock.AddUnit(_defaultBarCode1);
+
+            Assert.AreEqual(1, stock.UnitCount(_defaultBarCode1));
+            Assert.AreEqual(0, stock.UnitCount(_defaultBarCode2));
+        }
+        [Test]
+        public void AddTwoToStock_OneUnitInStock()
+        {
+            var stock = new game66Utils.Stock.Domain.CategoryStock(_defaultId);
+            stock.AddUnit(_defaultBarCode1);
+            stock.AddUnit(_defaultBarCode1);
+
+            Assert.AreEqual(2, stock.UnitCount(_defaultBarCode1));
+            Assert.AreEqual(0, stock.UnitCount(_defaultBarCode2));
+        }
+        [Test]
+        public void AddAndRemoveFromStock_NoUnitInStock()
+        {
+            var stock = new game66Utils.Stock.Domain.CategoryStock(_defaultId);
+            stock.AddUnit(_defaultBarCode1);
+            stock.RemoveUnit(_defaultBarCode1);
+
+            Assert.AreEqual(0, stock.UnitCount(_defaultBarCode1));
+            Assert.AreEqual(0, stock.UnitCount(_defaultBarCode2));
+        }
+
+        [Test]
+        public void RemoveToStock_Throws()
+        {
+            var stock = new game66Utils.Stock.Domain.CategoryStock(_defaultId);
+            Assert.Catch(()=>stock.RemoveUnit(_defaultBarCode1));
+        }
+    }
+
+    [TestFixture(Category = "unit")]
     public class ProductStockTests
     {
         private ProductId _defaultId = new ProductId("12345", Guid.NewGuid());

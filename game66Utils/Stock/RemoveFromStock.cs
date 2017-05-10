@@ -14,16 +14,16 @@ namespace game66Utils.Stock
 {
     public partial class RemoveFromStock : Form
     {
-        private IRemoveFromStock _removeFromStock;
+        private IRemoveFromStockCommand _removeFromStockCommand;
         private Guid _categoryId;
 
         public RemoveFromStock(
-            IRemoveFromStock removeFromStock,
+            IRemoveFromStockCommand removeFromStockCommand,
             Guid categoryId
         )
         {
             _categoryId = categoryId;
-            _removeFromStock = removeFromStock;
+            _removeFromStockCommand = removeFromStockCommand;
             InitializeComponent();
         }
         private void RemoveFromStock_Shown(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace game66Utils.Stock
                 MessageBox.Show("Введите штрихкод!");
                 return;
             }
-            await _removeFromStock.Execute(new ProductId(barCode, _categoryId));
+            await _removeFromStockCommand.Execute(_categoryId, barCode);
             MessageBox.Show("Списание успешно проведено!");
         }
     }

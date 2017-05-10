@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using game66Utils.Catalog.Query.CategoryList;
 using game66Utils.Database;
 
-namespace game66Utils.Catalog.Query
+namespace game66Utils.Catalog.Query.CategoryList
 {
     class CategoryListQuery : ICategoryListQuery
     {
@@ -25,7 +24,7 @@ namespace game66Utils.Catalog.Query
                 return list
                     .Select(x => new CategoryListDto
                     {
-                        Id = Guid.Parse(x.Id),
+                        Id = x.Id,
                         Name = x.Name,
                         ProductCount = x.ProductCount
                     })

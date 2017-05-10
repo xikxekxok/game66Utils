@@ -58,16 +58,16 @@
     <Compile Include="Command\IAddProductCommand.cs" />
     <Compile Include="Command\Impl\AddCategoryCommand.cs" />
     <Compile Include="Command\Impl\AddProductCommand.cs" />
+    <Compile Include="Command\Impl\UpdateCategoryCommand.cs" />
     <Compile Include="Command\IUpdateCategoryCommand.cs" />
-    <Compile Include="DataLayer\Category\CategoryRepository.cs" />
-    <Compile Include="DataLayer\Category\ICategoryDomainQuery.cs" />
-    <Compile Include="DataLayer\Category\ICategoryRepository.cs" />
-    <Compile Include="DataLayer\Product\IProductRepository.cs" />
-    <Compile Include="DataLayer\IUnitOfWork.cs" />
+    <Compile Include="DataLayer\Impl\CategoryDomainQuery.cs" />
+    <Compile Include="DataLayer\ICategoryDomainQuery.cs" />
+    <Compile Include="DataLayer\Impl\ProductDomainQuery.cs" />
+    <Compile Include="DataLayer\IProductDomainQuery.cs" />
     <Compile Include="DataLayer\IUnitOfWorkFactory.cs" />
-    <Compile Include="DataLayer\UnitOfWork.cs" />
-    <Compile Include="DataLayer\UnitOfWorkFactory.cs" />
+    <Compile Include="DataLayer\Impl\UnitOfWorkFactory.cs" />
     <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\ProductGroup.cs" />
     <Compile Include="Domain\Products\Product.cs" />
     <Compile Include="Domain\Products\ProductDescription.cs" />
     <Compile Include="Domain\Products\ProductId.cs" />
@@ -94,6 +94,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

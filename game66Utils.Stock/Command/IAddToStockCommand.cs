@@ -9,6 +9,6 @@ namespace game66Utils.Stock.Command
 {
     public interface IAddToStockCommand
     {
-        Task Execute(ProductId productId);
+        Task Execute(Guid categoryId, string productUnitBarCode);
     }
 }

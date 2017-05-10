@@ -66,11 +66,7 @@ namespace game66Utils.Stock
                 Title = Title_textbox.Text
             });
 
-            await _addToStockCommand.Execute(new ProductId
-            (
-                barCode: _barCode, 
-                categoryId: _categoryId
-            ));
+            await _addToStockCommand.Execute(_categoryId, _barCode);
 
             MessageBox.Show("Склад пополнен!");
         }
