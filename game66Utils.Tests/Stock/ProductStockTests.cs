@@ -66,7 +66,7 @@ namespace game66Utils.Tests.Stock
     [TestFixture(Category = "unit")]
     public class ProductStockTests
     {
-        private ProductId _defaultId = new ProductId("12345", Guid.NewGuid());
+        private BarCode _defaultId = new BarCode("12345", Guid.NewGuid());
         private ProductStock DefaultProduct()
         {
             return new ProductStock(_defaultId);

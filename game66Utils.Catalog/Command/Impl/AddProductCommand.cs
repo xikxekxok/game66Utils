@@ -24,7 +24,7 @@ namespace game66Utils.Catalog.Command.Impl
         {
             using (var uof = _unitOfWorkFactory.Create())
             {
-                var product = new Product(context.BarCode, context.CategoryId, new ProductDescription(context.Title), new ProductPrice(context.PurchasePrice, context.SellingPrice));
+                var product = new Product(context.BarCode, context.CategoryId, new Description(context.Title), new Price(context.PurchasePrice, context.SellingPrice));
 
                 uof.Add(product);
 

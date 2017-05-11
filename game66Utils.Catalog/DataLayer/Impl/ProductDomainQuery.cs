@@ -19,9 +19,9 @@ namespace game66Utils.Catalog.DataLayer.Impl
             return query;
         }
 
-        public IProductDomainQuery ById(ProductId id)
+        public IProductDomainQuery ById(BarCode id)
         {
-            ApplyQuery(query=>query.Where(x=>x.Barcode == id.BarCode && x.CategoryId == id.CategoryId));
+            ApplyQuery(query=>query.Where(x=>x.Barcode == id.Value && x.CategoryId == id.CategoryId));
             return this;
         }
     }

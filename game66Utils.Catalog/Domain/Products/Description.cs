@@ -2,16 +2,16 @@
 
 namespace game66Utils.Catalog.Domain.Products
 {
-    public class ProductDescription
+    public class Description
     {
         public string Title { get; }
-        public ProductDescription(string title)
+        public Description(string title)
         {
             if (title == null) throw new ArgumentNullException(nameof(title));
             Title = title;
         }
 
-        protected bool Equals(ProductDescription other)
+        protected bool Equals(Description other)
         {
             return string.Equals(Title, other.Title);
         }
@@ -21,7 +21,7 @@ namespace game66Utils.Catalog.Domain.Products
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ProductDescription) obj);
+            return Equals((Description) obj);
         }
 
         public override int GetHashCode()

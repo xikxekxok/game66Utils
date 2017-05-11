@@ -8,13 +8,11 @@ namespace game66Utils.Catalog.Domain.Products
     {
         public ProductState State { get; private set; }
 
-        public Product(string barCode, Guid categoryId, ProductDescription description, ProductPrice price)
+        public Product(BarCode barCode, Price price)
         {
             State = new ProductState
             {
-                Barcode = barCode,
-                CategoryId = categoryId,
-                Title = description.Title,
+                Barcode = barCode.Value,
                 PurchasePrice = price.Purchase,
                 SellingPrice = price.Sale
             };
@@ -25,22 +23,32 @@ namespace game66Utils.Catalog.Domain.Products
             State = state;
         }
 
-        public ProductId Id => new ProductId(State.Barcode, CategoryId);
-        public string BarCode => State.Barcode;
-        public Guid CategoryId => State.CategoryId;
-        public ProductDescription Description => new ProductDescription(State.Title);
-        public ProductPrice Price => new ProductPrice(State.PurchasePrice, State.SellingPrice);
+        public BarCode BarCode => new BarCode(State.Barcode);
+        public Price Price => new Price(State.PurchasePrice, State.SellingPrice);
 
 
-        public void UpdatePrice(ProductPrice newPrice)
+        public void UpdatePrice(Price newPrice)
         {
             State.PurchasePrice = newPrice.Purchase;
             State.SellingPrice = newPrice.Sale;
         }
 
-        public void UpdateDescription(ProductDescription newDescription)
+        protected bool Equals(Product other)
         {
-            State.Title = newDescription.Title;
+            return Equals(BarCode, other.BarCode);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Product) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (BarCode != null ? BarCode.GetHashCode() : 0);
         }
     }
 }

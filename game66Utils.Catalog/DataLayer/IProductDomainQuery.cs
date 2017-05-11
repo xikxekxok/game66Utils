@@ -9,6 +9,6 @@ namespace game66Utils.Catalog.DataLayer
 {
     internal interface IProductDomainQuery : IBaseDomainQuery<Product>
     {
-        IProductDomainQuery ById(ProductId id);
+        IProductDomainQuery ById(BarCode id);
     }
 }
