@@ -78,7 +78,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoriesList.cs" />
     <Compile Include="ChangeCategory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +121,7 @@
     <Compile Include="Stock\AddToStock.Designer.cs">
       <DependentUpon>AddToStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="Stock\CsvReportBuilder.cs" />
     <Compile Include="Stock\RemoveFromStock.cs">
       <SubType>Form</SubType>
     </Compile>

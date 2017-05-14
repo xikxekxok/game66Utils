@@ -7,6 +7,6 @@ namespace game66Utils.Infrastructure.DataLayer
     {
         void Add<TState>(IAggregate<TState> newAggregate) where TState : class;
         Task Commit();
-        T Query<T>() where T : class;
+        T Query<T>(bool readOnly = false) where T : class;
     }
 }

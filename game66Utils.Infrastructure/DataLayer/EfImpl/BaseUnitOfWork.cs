@@ -19,11 +19,16 @@ namespace game66Utils.Infrastructure.DataLayer.EfImpl
             _container.Add(typeof(TInterface), typeof(TImplementation));
         }
 
-        public T GetQuery<T>(DbContext context) where T : class
+        public T GetQuery<T>(DbContext context, bool readOnly) where T : class
         {
-            var typeImpl = _container[typeof(T)];
+            Type typeImpl;
+            if (!_container.TryGetValue(typeof(T), out typeImpl))
+            {
+                throw new Exception($"Implementation {typeof(T).Name} not found!");
+            }
+
             var impl = Activator.CreateInstance(typeImpl);
-            (impl as IInitByContext).Init(context);
+            (impl as IInitByContext).Init(context, readOnly);
             return impl as T;
         }
     }
@@ -52,9 +57,9 @@ namespace game66Utils.Infrastructure.DataLayer.EfImpl
             Context.Set<TState>().Add(newAggregate.State);
         }
 
-        public T Query<T>() where T : class
+        public T Query<T>(bool readOnly = false) where T : class
         {
-            return _domainQueryStorage.GetQuery<T>(Context);
+            return _domainQueryStorage.GetQuery<T>(Context, readOnly);
         }
     }
 }

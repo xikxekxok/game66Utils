@@ -5,7 +5,6 @@ namespace game66Utils.Infrastructure.DataLayer
 {
     public interface IBaseDomainQuery<TDomain> where TDomain : class
     {
-        void ReadOnly();
         Task<List<TDomain>> ToList();
         Task<TDomain> First();
         Task<bool> Any();

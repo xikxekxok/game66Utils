@@ -8,9 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using game66Utils.Catalog.Command;
+using game66Utils.Catalog.Command.AddGroup;
+using game66Utils.Catalog.Command.AddProductToGroup;
 using game66Utils.Catalog.Query;
 using game66Utils.Catalog.Query.CategoryList;
 using game66Utils.Catalog.Query.ProductExists;
+using game66Utils.Catalog.Query.SimularGroup;
 using game66Utils.Database;
 using game66Utils.Models;
 using game66Utils.Services;
@@ -159,7 +162,7 @@ namespace game66Utils
                 return;
             }
 
-            var dialog = new AddToStock(_kernel.Get<IProductExistsQuery>(), _kernel.Get<IAddToStockCommand>(), _kernel.Get<IAddProductCommand>(), category.Id);
+            var dialog = new AddToStock(_kernel.Get<IProductExistsQuery>(), _kernel.Get<ISimularGroupQuery>(),_kernel.Get<IAddGroupCommand>(), _kernel.Get<IAddProductToGroupCommand>(), _kernel.Get<IAddToStockCommand>(), category.Id);
             dialog.ShowDialog();
         }
         #endregion

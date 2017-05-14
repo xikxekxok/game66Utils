@@ -36,7 +36,7 @@
             this.Title_textbox = new System.Windows.Forms.TextBox();
             this.Create_button = new System.Windows.Forms.Button();
             this.BarCode_label = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.titleListBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // label1
@@ -86,6 +86,7 @@
             this.Title_textbox.Name = "Title_textbox";
             this.Title_textbox.Size = new System.Drawing.Size(577, 20);
             this.Title_textbox.TabIndex = 8;
+            this.Title_textbox.TextChanged += new System.EventHandler(this.Title_textbox_TextChanged);
             // 
             // Create_button
             // 
@@ -106,20 +107,21 @@
             this.BarCode_label.TabIndex = 11;
             this.BarCode_label.Text = "Штрихкод";
             // 
-            // listBox1
+            // titleListBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(685, 77);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
-            this.listBox1.TabIndex = 12;
+            this.titleListBox.FormattingEnabled = true;
+            this.titleListBox.Location = new System.Drawing.Point(661, 86);
+            this.titleListBox.Name = "titleListBox";
+            this.titleListBox.Size = new System.Drawing.Size(382, 95);
+            this.titleListBox.TabIndex = 12;
+            this.titleListBox.SelectedIndexChanged += new System.EventHandler(this.titleListBox_SelectedIndexChanged);
             // 
             // AddProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1115, 336);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.titleListBox);
             this.Controls.Add(this.BarCode_label);
             this.Controls.Add(this.Create_button);
             this.Controls.Add(this.label2);
@@ -145,6 +147,6 @@
         private System.Windows.Forms.TextBox Title_textbox;
         private System.Windows.Forms.Button Create_button;
         private System.Windows.Forms.Label BarCode_label;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox titleListBox;
     }
 }

@@ -54,20 +54,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatalogInjectModule.cs" />
+    <Compile Include="Command\AddGroup\AddGroupCommand.cs" />
+    <Compile Include="Command\AddProductToGroup\AddProductToGroupContext.cs" />
     <Compile Include="Command\IAddCategoryCommand.cs" />
-    <Compile Include="Command\IAddProductCommand.cs" />
+    <Compile Include="Command\AddGroup\IAddGroupCommand.cs" />
+    <Compile Include="Command\AddGroup\AddGroupContext.cs" />
+    <Compile Include="Command\AddProductToGroup\IAddProductToGroupCommand.cs" />
     <Compile Include="Command\Impl\AddCategoryCommand.cs" />
     <Compile Include="Command\Impl\AddProductCommand.cs" />
     <Compile Include="Command\Impl\UpdateCategoryCommand.cs" />
     <Compile Include="Command\IUpdateCategoryCommand.cs" />
     <Compile Include="DataLayer\Impl\CategoryDomainQuery.cs" />
     <Compile Include="DataLayer\ICategoryDomainQuery.cs" />
-    <Compile Include="DataLayer\Impl\ProductDomainQuery.cs" />
-    <Compile Include="DataLayer\IProductDomainQuery.cs" />
+    <Compile Include="DataLayer\IProductGroupQuery.cs" />
     <Compile Include="DataLayer\IUnitOfWorkFactory.cs" />
     <Compile Include="DataLayer\Impl\UnitOfWorkFactory.cs" />
+    <Compile Include="DataLayer\Impl\ProductGroupQuery.cs" />
     <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\CategoryId.cs" />
     <Compile Include="Domain\ProductGroup.cs" />
+    <Compile Include="Domain\ProductGroupId.cs" />
     <Compile Include="Domain\Products\Product.cs" />
     <Compile Include="Domain\Products\Description.cs" />
     <Compile Include="Domain\Products\BarCode.cs" />
@@ -79,6 +85,9 @@
     <Compile Include="Query\CategoryList\ICategoryListQuery.cs" />
     <Compile Include="Query\ProductExists\IProductExistsQuery.cs" />
     <Compile Include="Query\ProductExists\ProductExistsQuery.cs" />
+    <Compile Include="Query\SimularGroup\ISimularGroupQuery.cs" />
+    <Compile Include="Query\SimularGroup\SimularGroupDto.cs" />
+    <Compile Include="Query\SimularGroup\SimularGroupQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\game66Utils.Database\game66Utils.Database.csproj">

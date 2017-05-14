@@ -9,16 +9,16 @@ namespace game66Utils.Infrastructure.DataLayer.EfImpl
 {
     public interface IInitByContext
     {
-        void Init(DbContext context);
+        void Init(DbContext context, bool readOnly);
     }
 
     public abstract class BaseDomainQuery<TDomain, TState> : IInitByContext, IBaseDomainQuery<TDomain> where TDomain : class where TState : class
     {
-        public void Init(DbContext context)
+        public void Init(DbContext context, bool readOnly)
         {
             _query = context.Set<TState>();
-            // ReSharper disable once VirtualMemberCallInConstructor
-            //TODO do not call this in constructor
+            if (readOnly)
+                _query = _query.AsNoTracking();
             Include(_query);
         }
 
@@ -32,11 +32,7 @@ namespace game66Utils.Infrastructure.DataLayer.EfImpl
         protected abstract TDomain ToModel(TState state);
         
         protected abstract IQueryable<TState> Include(IQueryable<TState> query);
-
-        public void ReadOnly()
-        {
-            ApplyQuery(x=>x.AsNoTracking());
-        }
+        
 
         public async Task<List<TDomain>> ToList()
         {

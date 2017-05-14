@@ -29,8 +29,7 @@ namespace game66Utils.Catalog.Command.Impl
                     throw new Exception($"Category with id {id} not found!");
 
                 category.Update(categoryName);
-
-                uof.Add(category);
+                
                 await uof.Commit();
             }
         }

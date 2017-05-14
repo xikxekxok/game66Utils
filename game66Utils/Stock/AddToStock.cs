@@ -9,8 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using game66Utils.Catalog.Command;
+using game66Utils.Catalog.Command.AddGroup;
+using game66Utils.Catalog.Command.AddProductToGroup;
 using game66Utils.Catalog.Domain.Products;
 using game66Utils.Catalog.Query.ProductExists;
+using game66Utils.Catalog.Query.SimularGroup;
 using game66Utils.Stock.Command;
 
 namespace game66Utils.Stock
@@ -20,16 +23,22 @@ namespace game66Utils.Stock
         private IProductExistsQuery _productExistsQuery;
         private IAddToStockCommand _addToStockCommand;
         private Guid _categoryId;
-        private IAddProductCommand _addProductCommand;
+        private IAddGroupCommand _addGroupCommand;
+        private IAddProductToGroupCommand _addProductToGroupCommand;
+        private ISimularGroupQuery _simularGroupQuery;
 
         public AddToStock(
             IProductExistsQuery productExistsQuery,
+            ISimularGroupQuery simularGroupQuery,
+            IAddGroupCommand addGroupCommand,
+            IAddProductToGroupCommand addProductToGroupCommand,
             IAddToStockCommand addToStockCommand,
-            IAddProductCommand addProductCommand,
             Guid categoryId
         )
         {
-            _addProductCommand = addProductCommand;
+            _simularGroupQuery = simularGroupQuery;
+            _addProductToGroupCommand = addProductToGroupCommand;
+            _addGroupCommand = addGroupCommand;
             _categoryId = categoryId;
             _addToStockCommand = addToStockCommand;
             _productExistsQuery = productExistsQuery;
@@ -64,7 +73,7 @@ namespace game66Utils.Stock
             }
             else
             {
-                var dialog = new AddProduct(_addProductCommand, _addToStockCommand, barCode, _categoryId);
+                var dialog = new AddProduct(_simularGroupQuery, _addToStockCommand, _addGroupCommand, _addProductToGroupCommand, barCode, _categoryId);
                 dialog.ShowDialog();
                 this.Close();
             }

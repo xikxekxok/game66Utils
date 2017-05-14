@@ -23,7 +23,7 @@ namespace game66Utils.Catalog.Command.Impl
             using (var uof = _unitOfWorkFactory.Create())
             {
                 var id = Guid.NewGuid();
-                var category = new Category(id, categoryName);
+                var category = new Category(new CategoryId(id), categoryName);
                 uof.Add(category);
 
                 await uof.Commit();

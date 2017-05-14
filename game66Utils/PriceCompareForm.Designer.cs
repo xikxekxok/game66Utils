@@ -325,7 +325,7 @@
             this.ClientSize = new System.Drawing.Size(953, 432);
             this.Controls.Add(this.pageManager);
             this.Name = "PriceCompareForm";
-            this.Text = "Сравнение прайсов, версия 2.0.0-beta";
+            this.Text = "Сравнение прайсов, версия 2.0.1";
             this.Load += new System.EventHandler(this.PriceCompareForm_Load);
             this.pageManager.ResumeLayout(false);
             this.ComparePricePage.ResumeLayout(false);

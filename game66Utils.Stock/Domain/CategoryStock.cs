@@ -41,7 +41,8 @@ namespace game66Utils.Stock.Domain
                 {
                     BarCode = productBarCode,
                     CategoryId = CategoryId,
-                    Quantity = 0
+                    Quantity = 0,
+                   
                 };
                 State.ProductStocks.Add(product);
             }

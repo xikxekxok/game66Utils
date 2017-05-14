@@ -1,6 +1,8 @@
 ﻿using System;
 using game66Utils.Database;
+using game66Utils.Infrastructure;
 using game66Utils.Infrastructure.DataLayer;
+using JetBrains.Annotations;
 
 namespace game66Utils.Catalog.Domain.Products
 {
@@ -8,13 +10,20 @@ namespace game66Utils.Catalog.Domain.Products
     {
         public ProductState State { get; private set; }
 
-        public Product(BarCode barCode, Price price)
+        public Product([NotNull]CategoryId categoryId, [NotNull]ProductGroupId groupId, [NotNull]BarCode barCode, [NotNull]Price price)
         {
+            categoryId.CheckNull(nameof(categoryId));
+            groupId.CheckNull(nameof(groupId));
+            barCode.CheckNull(nameof(barCode));
+            price.CheckNull(nameof(price));
+
             State = new ProductState
             {
                 Barcode = barCode.Value,
                 PurchasePrice = price.Purchase,
-                SellingPrice = price.Sale
+                SellingPrice = price.Sale,
+                CategoryId = categoryId.Value,
+                ProductGroupId = groupId.Value
             };
         }
 
@@ -24,13 +33,17 @@ namespace game66Utils.Catalog.Domain.Products
         }
 
         public BarCode BarCode => new BarCode(State.Barcode);
-        public Price Price => new Price(State.PurchasePrice, State.SellingPrice);
+        public ProductGroupId ProductGroupId => new ProductGroupId(State.ProductGroupId);
+        public CategoryId CategoryId => new CategoryId(State.CategoryId);
 
-
-        public void UpdatePrice(Price newPrice)
+        public Price Price
         {
-            State.PurchasePrice = newPrice.Purchase;
-            State.SellingPrice = newPrice.Sale;
+            get { return new Price(State.PurchasePrice, State.SellingPrice); }
+            set
+            {
+                State.PurchasePrice = value.Purchase;
+                State.SellingPrice = value.Sale;
+            }
         }
 
         protected bool Equals(Product other)
@@ -43,7 +56,7 @@ namespace game66Utils.Catalog.Domain.Products
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Product) obj);
+            return Equals((Product)obj);
         }
 
         public override int GetHashCode()

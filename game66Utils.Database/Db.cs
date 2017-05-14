@@ -37,6 +37,7 @@ namespace game66Utils.Database
     {
         System.Data.Entity.DbSet<CategoryState> Categories { get; set; } // Category
         System.Data.Entity.DbSet<ProductState> Products { get; set; } // Product
+        System.Data.Entity.DbSet<ProductGroupState> ProductGroups { get; set; } // ProductGroup
         System.Data.Entity.DbSet<ProductStockState> ProductStocks { get; set; } // ProductStock
         System.Data.Entity.DbSet<ProductStockEventState> ProductStockEvents { get; set; } // ProductStockEvent
         System.Data.Entity.DbSet<StockState> Stocks { get; set; } // Stock
@@ -64,6 +65,7 @@ namespace game66Utils.Database
     {
         public System.Data.Entity.DbSet<CategoryState> Categories { get; set; } // Category
         public System.Data.Entity.DbSet<ProductState> Products { get; set; } // Product
+        public System.Data.Entity.DbSet<ProductGroupState> ProductGroups { get; set; } // ProductGroup
         public System.Data.Entity.DbSet<ProductStockState> ProductStocks { get; set; } // ProductStock
         public System.Data.Entity.DbSet<ProductStockEventState> ProductStockEvents { get; set; } // ProductStockEvent
         public System.Data.Entity.DbSet<StockState> Stocks { get; set; } // Stock
@@ -118,6 +120,7 @@ namespace game66Utils.Database
 
             modelBuilder.Configurations.Add(new CategoryStateConfiguration());
             modelBuilder.Configurations.Add(new ProductStateConfiguration());
+            modelBuilder.Configurations.Add(new ProductGroupStateConfiguration());
             modelBuilder.Configurations.Add(new ProductStockStateConfiguration());
             modelBuilder.Configurations.Add(new ProductStockEventStateConfiguration());
             modelBuilder.Configurations.Add(new StockStateConfiguration());
@@ -127,6 +130,7 @@ namespace game66Utils.Database
         {
             modelBuilder.Configurations.Add(new CategoryStateConfiguration(schema));
             modelBuilder.Configurations.Add(new ProductStateConfiguration(schema));
+            modelBuilder.Configurations.Add(new ProductGroupStateConfiguration(schema));
             modelBuilder.Configurations.Add(new ProductStockStateConfiguration(schema));
             modelBuilder.Configurations.Add(new ProductStockEventStateConfiguration(schema));
             modelBuilder.Configurations.Add(new StockStateConfiguration(schema));
@@ -142,6 +146,7 @@ namespace game66Utils.Database
     {
         public System.Data.Entity.DbSet<CategoryState> Categories { get; set; }
         public System.Data.Entity.DbSet<ProductState> Products { get; set; }
+        public System.Data.Entity.DbSet<ProductGroupState> ProductGroups { get; set; }
         public System.Data.Entity.DbSet<ProductStockState> ProductStocks { get; set; }
         public System.Data.Entity.DbSet<ProductStockEventState> ProductStockEvents { get; set; }
         public System.Data.Entity.DbSet<StockState> Stocks { get; set; }
@@ -150,6 +155,7 @@ namespace game66Utils.Database
         {
             Categories = new FakeDbSet<CategoryState>("Id");
             Products = new FakeDbSet<ProductState>("Barcode", "CategoryId");
+            ProductGroups = new FakeDbSet<ProductGroupState>("Id");
             ProductStocks = new FakeDbSet<ProductStockState>("BarCode", "CategoryId");
             ProductStockEvents = new FakeDbSet<ProductStockEventState>("Id");
             Stocks = new FakeDbSet<StockState>("CategoryId");
@@ -482,6 +488,10 @@ namespace game66Utils.Database
         // Reverse navigation
 
         /// <summary>
+        /// Parent (One-to-One) CategoryState pointed by [Stock].[CategoryId] (FK_Stock_Category)
+        /// </summary>
+        public virtual StockState Stock { get; set; } // Stock.FK_Stock_Category
+        /// <summary>
         /// Child Products where [Product].[CategoryId] point to this entity (FK_Product_Category)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<ProductState> Products { get; set; } // Product.FK_Product_Category
@@ -497,10 +507,10 @@ namespace game66Utils.Database
     public class ProductState
     {
         public string Barcode { get; set; } // Barcode (Primary key) (length: 32)
-        public string Title { get; set; } // Title (length: 512)
         public decimal PurchasePrice { get; set; } // PurchasePrice
         public decimal SellingPrice { get; set; } // SellingPrice
         public System.Guid CategoryId { get; set; } // CategoryId (Primary key)
+        public System.Guid ProductGroupId { get; set; } // ProductGroupId
 
         // Foreign keys
 
@@ -508,6 +518,31 @@ namespace game66Utils.Database
         /// Parent Category pointed by [Product].([CategoryId]) (FK_Product_Category)
         /// </summary>
         public virtual CategoryState Category { get; set; } // FK_Product_Category
+        /// <summary>
+        /// Parent ProductGroup pointed by [Product].([ProductGroupId]) (FK_Product_ProductGroup)
+        /// </summary>
+        public virtual ProductGroupState ProductGroup { get; set; } // FK_Product_ProductGroup
+    }
+
+    // ProductGroup
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.29.1.0")]
+    public class ProductGroupState
+    {
+        public System.Guid Id { get; set; } // Id (Primary key)
+        public string Title { get; set; } // Title (length: 512)
+        public System.Guid CategoryId { get; set; } // CategoryId
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child Products where [Product].[ProductGroupId] point to this entity (FK_Product_ProductGroup)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<ProductState> Products { get; set; } // Product.FK_Product_ProductGroup
+
+        public ProductGroupState()
+        {
+            Products = new System.Collections.Generic.List<ProductState>();
+        }
     }
 
     // ProductStock
@@ -549,6 +584,13 @@ namespace game66Utils.Database
         /// Child ProductStocks where [ProductStock].[CategoryId] point to this entity (FK_ProductStock_Stock)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<ProductStockState> ProductStocks { get; set; } // ProductStock.FK_ProductStock_Stock
+
+        // Foreign keys
+
+        /// <summary>
+        /// Parent Category pointed by [Stock].([CategoryId]) (FK_Stock_Category)
+        /// </summary>
+        public virtual CategoryState Category { get; set; } // FK_Stock_Category
 
         public StockState()
         {
@@ -594,13 +636,34 @@ namespace game66Utils.Database
             HasKey(x => new { x.Barcode, x.CategoryId });
 
             Property(x => x.Barcode).HasColumnName(@"Barcode").HasColumnType("varchar").IsRequired().IsUnicode(false).HasMaxLength(32).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(512);
             Property(x => x.PurchasePrice).HasColumnName(@"PurchasePrice").HasColumnType("decimal").IsRequired().HasPrecision(18,2);
             Property(x => x.SellingPrice).HasColumnName(@"SellingPrice").HasColumnType("decimal").IsRequired().HasPrecision(18,2);
             Property(x => x.CategoryId).HasColumnName(@"CategoryId").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.ProductGroupId).HasColumnName(@"ProductGroupId").HasColumnType("uniqueidentifier").IsRequired();
 
             // Foreign keys
             HasRequired(a => a.Category).WithMany(b => b.Products).HasForeignKey(c => c.CategoryId).WillCascadeOnDelete(false); // FK_Product_Category
+            HasRequired(a => a.ProductGroup).WithMany(b => b.Products).HasForeignKey(c => c.ProductGroupId).WillCascadeOnDelete(false); // FK_Product_ProductGroup
+        }
+    }
+
+    // ProductGroup
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.29.1.0")]
+    public class ProductGroupStateConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductGroupState>
+    {
+        public ProductGroupStateConfiguration()
+            : this("u0120612_zeronicus")
+        {
+        }
+
+        public ProductGroupStateConfiguration(string schema)
+        {
+            ToTable("ProductGroup", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"Id").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar").IsRequired().HasMaxLength(512);
+            Property(x => x.CategoryId).HasColumnName(@"CategoryId").HasColumnType("uniqueidentifier").IsRequired();
         }
     }
 
@@ -664,6 +727,9 @@ namespace game66Utils.Database
             HasKey(x => x.CategoryId);
 
             Property(x => x.CategoryId).HasColumnName(@"CategoryId").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+
+            // Foreign keys
+            HasRequired(a => a.Category).WithOptional(b => b.Stock).WillCascadeOnDelete(false); // FK_Stock_Category
         }
     }
 

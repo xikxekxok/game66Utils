@@ -11,6 +11,7 @@ namespace game66Utils.Catalog.DataLayer.Impl
         {
             var storage = new DomainQueryStorage();
             storage.Register<ICategoryDomainQuery, CategoryDomainQuery>();
+            storage.Register<IProductGroupQuery, ProductGroupQuery>();
             return new BaseUnitOfWork<MyDbContext>(storage);
         }
     }

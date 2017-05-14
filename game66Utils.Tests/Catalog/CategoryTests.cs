@@ -14,7 +14,7 @@ namespace game66Utils.Tests.Catalog
         [Test]
         public void CreateCategoryTest()
         {
-            var id = Guid.NewGuid();
+            var id = new CategoryId(Guid.NewGuid());
             var name = "12345";
             var cat = new Category(id, name);
             Assert.AreEqual(id, cat.Id);
@@ -24,7 +24,7 @@ namespace game66Utils.Tests.Catalog
         [Test]
         public void UpdateCategoryNameTest()
         {
-            var id = Guid.NewGuid();
+            var id = new CategoryId(Guid.NewGuid());
             var name = "12345";
             var name2 = "newName";
 

@@ -12,8 +12,8 @@ namespace game66Utils.Tests.Catalog
     [TestFixture(Category = "unit")]
     public class ProductGroupTest
     {
-        private Guid _id;
-        private Guid _categoryId;
+        private ProductGroupId _id = new ProductGroupId(Guid.NewGuid());
+        private CategoryId _categoryId = new CategoryId(Guid.NewGuid());
         private Description _description = new Description("abc");
         private ProductGroup Create()
         {
@@ -34,7 +34,7 @@ namespace game66Utils.Tests.Catalog
         [Test]
         public void CreateGroupTest_NullDescr_Throws()
         {
-            Assert.Catch(() => new ProductGroup(_id, _categoryId, _description));
+            Assert.Catch(() => new ProductGroup(_id, _categoryId, null));
         }
 
 
@@ -51,42 +51,33 @@ namespace game66Utils.Tests.Catalog
         public void AddProduct()
         {
             var group = Create();
-            var product = new Product(new BarCode("12345"), new Price(50, 100));
-
-            group.AddProduct(product);
-
-            Assert.AreEqual(product, group.GetProduct(new BarCode("12345")));
+            group.AddProduct(new BarCode("12345"), new Price(50, 100));
 
             Assert.AreEqual(1, group.Products.Count);
-            Assert.AreEqual(product, group.Products.FirstOrDefault());
+            Assert.AreEqual(new BarCode("12345"), group.Products.FirstOrDefault().BarCode);
+            Assert.AreEqual(new Price(50, 100), group.Products.FirstOrDefault().Price);
         }
 
         [Test]
         public void AddProduct_Duplicate_Throws()
         {
             var group = Create();
-            var product = new Product(new BarCode("12345"), new Price(50, 100));
-            var product2 = new Product(new BarCode("12345"), new Price(10,10));
 
-            group.AddProduct(product);
-            Assert.Catch(() => group.AddProduct(product2));
+            group.AddProduct(new BarCode("12345"), new Price(50, 100));
+            Assert.Catch(() => group.AddProduct(new BarCode("12345"), new Price(10, 10)));
         }
 
         [Test]
-        public void AddProduct_Null_Throws()
+        public void AddProduct_NullBarCode_Throws()
         {
             var group = Create();
-            Assert.Catch(() => group.AddProduct(null));
+            Assert.Catch(() => group.AddProduct(null, new Price(10,10)));
         }
-
         [Test]
-        public void GetProduct_Null_Throws()
+        public void AddProduct_NullPrice_Throws()
         {
             var group = Create();
-            var product = new Product(new BarCode("12345"), new Price(50, 100));
-            group.AddProduct(product);
-
-            Assert.Catch(() => group.GetProduct(null));
+            Assert.Catch(() => group.AddProduct(new BarCode("12345"), null));
         }
     }
 }
