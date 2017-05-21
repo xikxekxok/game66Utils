@@ -6,7 +6,4 @@ using System.Threading.Tasks;
 
 namespace game66Utils.Stock
 {
-    public class CsvReportBuilder
-    {
-    }
 }

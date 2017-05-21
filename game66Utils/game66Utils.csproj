@@ -188,6 +188,10 @@
       <Project>{19A871DF-BAB6-4B25-9996-93DCD20204D7}</Project>
       <Name>game66Utils.Factory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\game66Utils.StockReport\game66Utils.StockReport.csproj">
+      <Project>{ECB641BB-1D0A-45A1-A394-725E74F11F80}</Project>
+      <Name>game66Utils.StockReport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\game66Utils.Stock\game66Utils.Stock.csproj">
       <Project>{EA550033-DA65-42D8-A318-83D5525EAA36}</Project>
       <Name>game66Utils.Stock</Name>

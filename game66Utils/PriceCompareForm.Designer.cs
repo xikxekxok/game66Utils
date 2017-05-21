@@ -53,6 +53,7 @@
             this.RenameCategoryBtn = new System.Windows.Forms.Button();
             this.CategoryList = new System.Windows.Forms.ListBox();
             this.stockPage = new System.Windows.Forms.TabPage();
+            this.createCsvReportBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.stock_categories = new System.Windows.Forms.ComboBox();
             this.removeFromStock = new System.Windows.Forms.Button();
@@ -270,6 +271,7 @@
             // 
             // stockPage
             // 
+            this.stockPage.Controls.Add(this.createCsvReportBtn);
             this.stockPage.Controls.Add(this.label7);
             this.stockPage.Controls.Add(this.stock_categories);
             this.stockPage.Controls.Add(this.removeFromStock);
@@ -280,6 +282,16 @@
             this.stockPage.TabIndex = 2;
             this.stockPage.Text = "Склад";
             this.stockPage.UseVisualStyleBackColor = true;
+            // 
+            // createCsvReportBtn
+            // 
+            this.createCsvReportBtn.Location = new System.Drawing.Point(22, 265);
+            this.createCsvReportBtn.Name = "createCsvReportBtn";
+            this.createCsvReportBtn.Size = new System.Drawing.Size(75, 23);
+            this.createCsvReportBtn.TabIndex = 4;
+            this.createCsvReportBtn.Text = "Отчет в csv";
+            this.createCsvReportBtn.UseVisualStyleBackColor = true;
+            this.createCsvReportBtn.Click += new System.EventHandler(this.createCsvReportBtn_Click);
             // 
             // label7
             // 
@@ -325,7 +337,7 @@
             this.ClientSize = new System.Drawing.Size(953, 432);
             this.Controls.Add(this.pageManager);
             this.Name = "PriceCompareForm";
-            this.Text = "Сравнение прайсов, версия 2.0.1";
+            this.Text = "Сравнение прайсов, версия 2.0.2";
             this.Load += new System.EventHandler(this.PriceCompareForm_Load);
             this.pageManager.ResumeLayout(false);
             this.ComparePricePage.ResumeLayout(false);
@@ -368,6 +380,7 @@
         private System.Windows.Forms.Button addToStockBtn;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox stock_categories;
+        private System.Windows.Forms.Button createCsvReportBtn;
     }
 }
 

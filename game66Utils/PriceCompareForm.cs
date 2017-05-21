@@ -19,6 +19,7 @@ using game66Utils.Models;
 using game66Utils.Services;
 using game66Utils.Stock;
 using game66Utils.Stock.Command;
+using game66Utils.StockReport;
 using Ninject;
 
 namespace game66Utils
@@ -179,6 +180,29 @@ namespace game66Utils
             var dialog = new RemoveFromStock(_kernel.Get<IRemoveFromStockCommand>(), category.Id);
             dialog.ShowDialog();
 
+        }
+
+        private void createCsvReportBtn_Click(object sender, EventArgs e)
+        {
+            var category = stock_categories.SelectedItem as CategoryListDto;
+            if (category == null)
+            {
+                MessageBox.Show("Выберите категорию!");
+                return;
+            }
+            var report = new CsvStockReportBuilder().GetCsvReport(category.Id);
+            CompareResultSaveDialog.Filter = "Csv files | *.csv";
+            CompareResultSaveDialog.DefaultExt = "csv";
+            CompareResultSaveDialog.AddExtension = true;
+            if (CompareResultSaveDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (var myStream = CompareResultSaveDialog.OpenFile())
+                {
+                    var byt = Encoding.GetEncoding(1251).GetBytes(report);
+                    myStream.Write(byt, 0, byt.Length);
+                    myStream.Close();
+                }
+            }
         }
     }
 }
